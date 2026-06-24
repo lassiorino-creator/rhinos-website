@@ -1,0 +1,23 @@
+# Ambienti virtuali Python
+venv/
+.venv/
+env/
+ENV/
+
+# Cache di Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Configurazioni locali di VS Code e del sistema
+.vscode/
+.DS_Store
+Thumbs.db
+
+# File di configurazione di Vercel locale
+.vercel/
+
+# File di ambiente (crealo se devi nascondere password o chiavi segrete)
+.env
