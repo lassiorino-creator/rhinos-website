@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rhino's Agency | Esports & Content Creation Management</title>
-  <!-- Link alle icone Tabler (usate nel tuo foglio di stile) -->
+  <title>{{ data.agency_name }} | Elite Esports & Content Management</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,21 +13,20 @@
 
     /* NAV */
     .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 48px; border-bottom: 0.5px solid rgba(255,255,255,0.07); position: relative; z-index: 10; background: #080808; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: #fff; }
     .logo-mark { width: 36px; height: 36px; background: #F5C200; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
     .logo-mark i { font-size: 20px; color: #080808; }
-    .logo-text { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+    .logo-text { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
     .logo-text span { color: #F5C200; }
     .logo-est { font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; display: block; margin-top: 1px; }
     .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.15s; font-weight: 500; }
     .nav-links a:hover { color: #F5C200; }
     .nav-right { display: flex; align-items: center; gap: 16px; }
-    .lang-toggle { font-size: 11px; color: rgba(255,255,255,0.3); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 4px 10px; cursor: pointer; font-weight: 500; }
-    .nav-cta { font-size: 11px; padding: 8px 20px; background: #F5C200; color: #080808; border: none; border-radius: 3px; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.15s; }
+    .nav-cta { font-size: 11px; padding: 8px 20px; background: #F5C200; color: #080808; border: none; border-radius: 3px; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; transition: opacity 0.15s; }
     .nav-cta:hover { opacity: 0.9; }
 
-    /* HERO */
+    /* HERO & LAYOUT SECTIONS */
     .hero { padding: 120px 48px 100px; position: relative; overflow: hidden; min-height: 550px; }
     .hero-bg-text { position: absolute; top: 20px; right: -20px; font-size: 220px; font-weight: 800; color: rgba(245,194,0,0.03); letter-spacing: -0.05em; line-height: 1; pointer-events: none; user-select: none; white-space: nowrap; }
     .hero-accent { position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(245,194,0,0.15) 40%, transparent 100%); }
@@ -39,9 +37,9 @@
     .hero h1 em { font-style: normal; color: #F5C200; }
     .hero-sub { font-size: 16px; color: rgba(255,255,255,0.5); max-width: 550px; line-height: 1.7; margin-bottom: 40px; }
     .hero-actions { display: flex; gap: 14px; align-items: center; margin-bottom: 72px; }
-    .btn-primary { padding: 14px 32px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; transition: opacity 0.15s; }
-    .btn-primary:hover { opacity: 0.9; }
-    .btn-outline { padding: 14px 32px; background: transparent; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 500; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; transition: all 0.15s; }
+    
+    .btn-primary { padding: 14px 32px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; display: inline-block; transition: opacity 0.15s; }
+    .btn-outline { padding: 14px 32px; background: transparent; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 500; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; display: inline-block; transition: all 0.15s; }
     .btn-outline:hover { border-color: #F5C200; color: #F5C200; }
     
     .hero-stats { display: flex; gap: 0; border-top: 0.5px solid rgba(255,255,255,0.07); padding-top: 40px; }
@@ -57,14 +55,11 @@
     .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: #F5C200; flex-shrink: 0; }
     @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* SERVIZI */
+    /* SERVIZI DEREGOLATI CON JINJA */
     .section { padding: 100px 48px; }
     .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
     .section-eyebrow { font-size: 11px; letter-spacing: 0.2em; color: #F5C200; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
     .section-title { font-size: 36px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: -0.01em; }
-    .section-link { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 0.06em; display: flex; align-items: center; gap: 6px; font-weight: 500; transition: color 0.15s; text-transform: uppercase; }
-    .section-link:hover { color: #F5C200; }
-
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
     .svc { background: #0d0d0d; padding: 40px 32px; transition: background 0.15s; }
     .svc:hover { background: #121212; }
@@ -74,65 +69,32 @@
     .svc h3 { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 12px; letter-spacing: -0.01em; }
     .svc p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
 
-    /* CHI SIAMO */
+    /* CHI SIAMO & CANDIDATURE */
     .about { padding: 100px 48px; background: #0d0d0d; border-top: 0.5px solid rgba(255,255,255,0.06); border-bottom: 0.5px solid rgba(255,255,255,0.06); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .about-visual { position: relative; }
     .about-card { background: #111; border: 0.5px solid rgba(255,255,255,0.06); border-radius: 6px; padding: 36px; }
     .about-brand { display: flex; align-items: center; gap: 14px; padding: 20px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
     .about-brand:last-child { border-bottom: none; padding-bottom: 0; }
-    .about-brand:first-of-type { padding-top: 0; }
     .brand-icon { width: 44px; height: 44px; border-radius: 4px; background: rgba(245,194,0,0.06); border: 0.5px solid rgba(245,194,0,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .brand-icon i { font-size: 20px; color: #F5C200; }
     .brand-name { font-size: 14px; font-weight: 600; color: #fff; }
     .brand-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
     .about-tag { display: inline-block; font-size: 10px; padding: 3px 8px; background: rgba(245,194,0,0.1); border: 0.5px solid rgba(245,194,0,0.2); border-radius: 2px; color: #F5C200; margin-left: auto; flex-shrink: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-    .about-text h2 { font-size: 36px; font-weight: 700; margin-bottom: 24px; text-transform: uppercase; line-height: 1.15; }
-    .about-text p { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.8; margin-bottom: 18px; }
-
-    /* CONTATTI */
-    .contact { padding: 100px 48px; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .contact-left h2 { font-size: 36px; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; }
-    .contact-left p { font-size: 15px; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 40px; }
-    .contact-detail { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-    .contact-detail i { font-size: 18px; color: #F5C200; }
-    .contact-detail span { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 500; }
     
     .cform { background: #0d0d0d; border: 0.5px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 36px; }
     .flabel { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 8px; font-weight: 600; }
-    .finput { width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 3px; padding: 12px 14px; font-size: 14px; color: #fff; font-family: var(--font-sans); margin-bottom: 20px; transition: border-color 0.15s; }
-    .finput:focus { outline: none; border-color: rgba(245,194,0,0.4); background: rgba(255,255,255,0.05); }
-    .ftextarea { min-height: 110px; resize: vertical; }
-    .fsubmit { width: 100%; padding: 14px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; transition: opacity 0.15s; }
-    .fsubmit:hover { opacity: 0.9; }
+    .finput { width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 3px; padding: 12px 14px; font-size: 14px; color: #fff; font-family: var(--font-sans); margin-bottom: 20px; }
+    .fsubmit { width: 100%; padding: 14px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; }
 
-    /* PORTAL */
     .portal { background: rgba(245,194,0,0.03); border-top: 0.5px solid rgba(245,194,0,0.12); border-bottom: 0.5px solid rgba(245,194,0,0.12); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
-    .portal span { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 500; }
-    .portal-btn { padding: 10px 24px; background: transparent; border: 0.5px solid #F5C200; border-radius: 3px; color: #F5C200; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; letter-spacing: 0.07em; display: flex; align-items: center; gap: 8px; transition: all 0.15s; }
-    .portal-btn:hover { background: #F5C200; color: #080808; }
-
-    /* FOOTER */
     .footer { padding: 32px 48px; border-top: 0.5px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; background: #080808; }
-    .footer-logo { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; }
-    .footer-logo span { color: #F5C200; }
     .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.15s; }
-    .footer-links a:hover { color: #F5C200; }
 
-    /* RESPONSIVE */
     @media (max-width: 968px) {
       .nav { padding: 18px 24px; }
-      .hero { padding: 80px 24px 60px; }
-      .hero h1 { font-size: 40px; }
       .services-grid { grid-template-columns: 1fr; }
-      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .section, .about, .contact, .portal { padding: 60px 24px; }
-      .hero-stats { flex-wrap: wrap; gap: 24px; }
-      .stat { border: none; margin: 0; padding: 0; min-width: 40%; }
-      .footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .section, .about { padding: 60px 24px; }
     }
   </style>
 </head>
@@ -140,199 +102,177 @@
 
 <div class="site">
 
-  <!-- NAV -->
   <nav class="nav">
-    <div class="nav-logo">
-      <div class="logo-mark"><i class="ti ti-shield" aria-hidden="true"></i></div>
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"><i class="ti ti-shield"></i></div>
       <div>
         <div class="logo-text">RHINO<span>'S</span> AGENCY</div>
-        <span class="logo-est">EST. 2026</span>
+        <span class="logo-est">EST. {{ data.established }}</span>
       </div>
-    </div>
+    </a>
     <div class="nav-links">
-      <a href="#chi-siamo">Chi siamo</a>
-      <a href="#servizi">Servizi</a>
-      <a href="#contatti">Contatti</a>
+      <a href="/#servizi">Servizi</a>
+      <a href="/#chi-siamo">Chi Siamo</a>
+      <a href="/unisciti" style="color: #F5C200; font-weight: 600;">We're Hiring!</a>
     </div>
     <div class="nav-right">
-      <span class="lang-toggle">IT / EN</span>
-      <button class="nav-cta">Discord Hub</button>
+      <a href="/unisciti" class="nav-cta">Candidati</a>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg-text">RHINO</div>
-    <div class="hero-accent"></div>
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      <span>Elite Esports & Content Management</span>
-    </div>
-    <h1>Eliminiamo le inefficienze.<br>Tu pensa solo a <em>performare</em>.</h1>
-    <p class="hero-sub">Siamo il partner tecnico e gestionale d'élite che fa da ponte strategico tra il talento e le organizzazioni del settore gaming.</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('servizi').scrollIntoView({behavior: 'smooth'});">I nostri servizi</button>
-      <button class="btn-outline" onclick="document.getElementById('contatti').scrollIntoView({behavior: 'smooth'});">Mettiti in contatto →</button>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-n">2</div><div class="stat-l">Brand attivi</div></div>
-      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Modelli di collaborazione</div></div>
-      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Focus sulle performance</div></div>
-      <div class="stat"><div class="stat-n">2026</div><div class="stat-l">Anno fondazione</div></div>
-    </div>
-  </section>
+  {% if page_id == 'home' %}
+  
+    <section class="hero">
+      <div class="hero-bg-text">RHINO</div>
+      <div class="hero-accent"></div>
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Elite Esports & Content Management</span>
+      </div>
+      <h1>Eliminiamo le inefficienze.<br>Tu pensa solo a <em>performare</em>.</h1>
+      <p class="hero-sub">{{ data.hero_sub }}</p>
+      <div class="hero-actions">
+        <a href="/#servizi" class="btn-primary">I nostri servizi</a>
+        <a href="/unisciti" class="btn-outline">Lavora con noi (Hiring) →</a>
+      </div>
+      
+      <div class="hero-stats">
+        {% for stat in data.stats %}
+        <div class="stat">
+          <div class="stat-n">{{ stat.value }}</div>
+          <div class="stat-l">{{ stat.label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
 
-  <!-- TICKER -->
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span class="ticker-item"><span class="ticker-dot"></span>Rhino's Agency</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>RHA Esport</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Esports Management</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Talent Development</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Performance Coaching</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Digital Infrastructure</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Content Creation</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Scouting d'élite</span>
-      <!-- Duplicati per effetto infinito continuo -->
-      <span class="ticker-item"><span class="ticker-dot"></span>Rhino's Agency</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>RHA Esport</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Esports Management</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Talent Development</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Performance Coaching</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Digital Infrastructure</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Content Creation</span>
-      <span class="ticker-item"><span class="ticker-dot"></span>Scouting d'élite</span>
+    <div class="ticker">
+      <div class="ticker-inner">
+        {% for item in data.ticker_items %}
+          <span class="ticker-item"><span class="ticker-dot"></span>{{ item }}</span>
+        {% endfor %}
+        {# Duplicazione di sicurezza per effetto loop infinito #}
+        {% for item in data.ticker_items %}
+          <span class="ticker-item"><span class="ticker-dot"></span>{{ item }}</span>
+        {% endfor %}
+      </div>
     </div>
-  </div>
 
-  <!-- SERVIZI -->
-  <section class="section" id="servizi">
-    <div class="section-header">
-      <div>
-        <div class="section-eyebrow">La nostra operatività</div>
-        <div class="section-title">Aree di Servizio</div>
+    <section class="section" id="servizi">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">La nostra operatività</div>
+          <div class="section-title">Aree di Servizio</div>
+        </div>
       </div>
-      <a href="#contatti" class="section-link">Richiedi una consulenza <i class="ti ti-arrow-right" aria-hidden="true"></i></a>
-    </div>
-    <div class="services-grid">
-      <div class="svc">
-        <div class="svc-num">01</div>
-        <div class="svc-icon"><i class="ti ti-briefcase" aria-hidden="true"></i></div>
-        <h3>Management Strategico</h3>
-        <p>Gestione quotidiana dei roster, logistica dei player, flussi comunicativi interni, negoziazione dei contratti e organizzazione eventi competitivi.</p>
+      <div class="services-grid">
+        {% for svc in data.services %}
+        <div class="svc">
+          <div class="svc-num">{{ svc.id }}</div>
+          <div class="svc-icon"><i class="ti {{ svc.icon }}"></i></div>
+          <h3>{{ svc.title }}</h3>
+          <p>{{ svc.desc }}</p>
+        </div>
+        {% endfor %}
       </div>
-      <div class="svc">
-        <div class="svc-num">02</div>
-        <div class="svc-icon"><i class="ti ti-activity" aria-hidden="true"></i></div>
-        <h3>Performance & Coaching</h3>
-        <p>Analisi tecnica dei match e studio strategico del meta di gioco uniti a percorsi strutturati di mental coaching per la gestione dello stress da competizione.</p>
-      </div>
-      <div class="svc">
-        <div class="svc-num">03</div>
-        <div class="svc-icon"><i class="ti ti-device-laptop" aria-hidden="true"></i></div>
-        <h3>Infrastruttura Digitale</h3>
-        <p>Sviluppo landing page dedicate, cura dell'identità visiva del brand, asset grafici completi per stream e piani editoriali social mirati all'engagement.</p>
-      </div>
-      <div class="svc">
-        <div class="svc-num">04</div>
-        <div class="svc-icon"><i class="ti ti-search" aria-hidden="true"></i></div>
-        <h3>Scouting & Data Evaluation</h3>
-        <p>Selezione mirata di Player e Content Creator attraverso l'analisi di dati concreti: performance in-game, reach digitale ed effettive competenze tecniche.</p>
-      </div>
-      <div class="svc">
-        <div class="svc-num">05</div>
-        <div class="svc-icon"><i class="ti ti-adjustments" aria-hidden="true"></i></div>
-        <h3>Integrazione Tecnica</h3>
-        <p>Fornitura immediata al talento degli strumenti e delle competenze necessarie per scalare i propri progetti: setup, grafiche e supporto psicologico.</p>
-      </div>
-      <div class="svc">
-        <div class="svc-num">06</div>
-        <div class="svc-icon"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
-        <h3>Modelli Flessibili</h3>
-        <p>Collaborazioni costruite su misura del progetto attraverso formule di Service Fee mirate, Management a Canone ricorrente o Revenue Sharing.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CHI SIAMO -->
-  <div class="about" id="chi-siamo">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-card">
-          <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;font-weight:600;">La nostra struttura</div>
-          <div class="about-brand">
-            <div class="brand-icon"><i class="ti ti-building" aria-hidden="true"></i></div>
-            <div>
-              <div class="brand-name">Rhino's Agency</div>
-              <div class="brand-desc">Entità operativa di management e servizi</div>
+    <div class="about" id="chi-siamo">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-card">
+            <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;font-weight:600;">La nostra struttura</div>
+            <div class="about-brand">
+              <div class="brand-icon"><i class="ti ti-building"></i></div>
+              <div>
+                <div class="brand-name">Rhino's Agency</div>
+                <div class="brand-desc">Entità operativa di management e servizi</div>
+              </div>
+              <span class="about-tag">Management</span>
             </div>
-            <span class="about-tag">Management</span>
-          </div>
-          <div class="about-brand">
-            <div class="brand-icon"><i class="ti ti-trophy" aria-hidden="true"></i></div>
-            <div>
-              <div class="brand-name">RHA Esport</div>
-              <div class="brand-desc">Il brand competitivo del team e dei talenti</div>
+            
+            {% for collab in data.collaborations %}
+            <div class="about-brand">
+              <div class="brand-icon"><i class="ti ti-bolt"></i></div>
+              <div>
+                <div class="brand-name">{{ collab.team }}</div>
+                <div class="brand-desc">{{ collab.type }} — {{ collab.date }}</div>
+              </div>
+              <span class="about-tag" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #a855f7;">{{ collab.status }}</span>
             </div>
-            <span class="about-tag">Talent</span>
-          </div>
-          <div style="margin-top:24px;padding-top:20px;border-top:0.5px solid rgba(255,255,255,0.06);">
-            <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;font-weight:600;">Partner Attivi</div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <span style="font-size:11px;padding:5px 12px;background:rgba(245,194,0,0.06);border:0.5px solid rgba(245,194,0,0.15);border-radius:3px;color:#F5C200;font-weight:500;">Saturlity</span>
-              <span style="font-size:11px;padding:5px 12px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:3px;color:rgba(255,255,255,0.5);">W-Fox</span>
-              <span style="font-size:11px;padding:5px 12px;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.08);border-radius:3px;color:rgba(255,255,255,0.5);">Edgarito</span>
+            {% endfor %}
+
+            <div style="margin-top:24px;padding-top:20px;border-top:0.5px solid rgba(255,255,255,0.06);">
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;font-weight:600;">Partner Attivi</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                {% for partner in data.partners %}
+                  <span style="font-size:11px;padding:5px 12px;background:rgba(245,194,0,0.06);border:0.5px solid rgba(245,194,0,0.15);border-radius:3px;color:#F5C200;font-weight:500;">{{ partner }}</span>
+                {% endfor %}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="about-text">
-        <div class="section-eyebrow">Chi siamo</div>
-        <h2>Un ponte strategico tra talento e organizzazione</h2>
-        <p>Rhino's Agency nasce come partner operativo specializzato per l'ecosistema Esports e Content Creation. Lavoriamo attivamente sul mercato per rimuovere tutti i colli di bottiglia e i blocchi logistico-gestionali.</p>
-        <p>Il nostro metodo si basa su tre step rigorosi: un'Analisi iniziale fondata sui dati concreti di reach e performance, l'Integrazione Tecnica immediata dello staff e degli asset di supporto, e un Monitoraggio Continuo delle relazioni commerciali per scalare il valore del progetto.</p>
+        <div class="about-text">
+          <div class="section-eyebrow">Chi siamo</div>
+          <h2>Un ponte strategico tra talento e organizzazione</h2>
+          <p>Rhino's Agency nasce come partner operativo specializzato per l'ecosistema Esports e Content Creation. Lavoriamo attivamente sul mercato per rimuovere tutti i colli di bottiglia e i blocchi logistico-gestionali.</p>
+          <p>Il nostro metodo si basa su tre step rigorosi: un'Analisi iniziale fondata sui dati concreti di reach e performance, l'Integrazione Tecnica immediata dello staff e degli asset di supporto, e un Monitoraggio Continuo delle relazioni commerciali per scalare il valore del progetto.</p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- CONTATTI -->
-  <section class="contact" id="contatti">
-    <div class="contact-grid">
-      <div class="contact-left">
-        <div class="section-eyebrow">Parla con il management</div>
-        <h2>Sviluppa il tuo potenziale</h2>
-        <p>Sei un professionista in cerca di management o un'organizzazione che ha bisogno di ottimizzare i propri roster tecnici? Scegli il nostro network.</p>
-        <div class="contact-detail"><i class="ti ti-mail" aria-hidden="true"></i><span>rhinos.agency@gmail.com</span></div>
-        <div class="contact-detail"><i class="ti ti-brand-discord" aria-hidden="true"></i><span>Discord Server — Canale Operativo</span></div>
-        <div class="contact-detail"><i class="ti ti-world" aria-hidden="true"></i><span>rhinos-agency.base44.app</span></div>
+  {% elif page_id == 'unisciti' %}
+
+    <section class="section" style="max-width: 800px; margin: 0 auto; padding-top: 140px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div class="section-eyebrow">Join Our Growing Team</div>
+        <h2 class="section-title" style="font-size: 46px; color: #F5C200;">We're Hiring!</h2>
+        <p style="color: rgba(255,255,255,0.5); margin-top: 10px;">Entra a far parte della struttura tecnica ed esecutiva di Rhino's Agency.</p>
       </div>
-      <div class="cform">
-        <label class="flabel">Nome / Organizzazione</label>
-        <input class="finput" type="text" placeholder="Es. Nome Team o Nome Player">
+
+      <form class="cform" action="/invia-candidatura" methods="POST">
+        <label class="flabel">Nome Completo</label>
+        <input class="finput" type="text" name="nome" placeholder="Il tuo nome e cognome" required>
+
         <label class="flabel">Email di Contatto</label>
-        <input class="finput" type="email" placeholder="nome@esempio.com">
-        <label class="flabel">Progetto o Roster d'interesse</label>
-        <textarea class="finput ftextarea" placeholder="Descrivi brevemente il tuo posizionamento in-game o le figure di staff che stai cercando..."></textarea>
-        <button class="fsubmit">Invia Richiesta Operativa</button>
-      </div>
-    </div>
-  </section>
+        <input class="finput" type="email" name="email" placeholder="nome@esempio.com" required>
 
-  <!-- PORTAL -->
+        <label class="flabel">Posizione d'interesse (Poster Attivi)</label>
+        <select class="finput" name="posizione" style="background: #111; color: #fff;" required>
+          <option value="" disabled selected>Seleziona il ruolo...</option>
+          {% for posizione in data.hiring_positions %}
+            <option value="{{ posizione }}">{{ posizione }}</option>
+          {% endfor %}
+        </select>
+
+        <label class="flabel">Piattaforma Principale Operativa</label>
+        <select class="finput" name="piattaforma" style="background: #111; color: #fff;" required>
+          <option value="PC">PC (Workstation Intel/AMD)</option>
+          <option value="PS5">PlayStation 5</option>
+          <option value="Xbox">Xbox Series X/S</option>
+          <option value="Hybrid">Multi-piattaforma</option>
+        </select>
+
+        <label class="flabel">Disponibilità settimanale (Giorni)</label>
+        <input class="finput" type="number" name="disponibilita" min="1" max="7" placeholder="Es. 5" required>
+
+        <label class="flabel">Esperienze pregresse o Note sul posizionamento</label>
+        <textarea class="finput ftextarea" name="messaggio" placeholder="Raccontaci i team con cui hai lavorato o il tuo portfolio tecnico..." required></textarea>
+
+        <button type="submit" class="fsubmit">Invia Candidatura Ufficiale</button>
+      </form>
+    </section>
+
+  {% endif %}
+
   <div class="portal">
     <span>Accesso riservato allo staff e ai talenti registrati nel network.</span>
-    <button class="portal-btn"><i class="ti ti-lock" aria-hidden="true"></i> Staff Portal</button>
+    <button class="portal-btn"><i class="ti ti-lock"></i> Staff Portal</button>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-logo">RHINO'S <span>AGENCY</span></div>
     <div class="footer-copy">© 2026 Rhino's Agency — Tutti i diritti riservati.</div>
-    <div class="footer-links">
-      <a href="https://www.instagram.com/" target="_blank">Instagram</a>
-      <a href="https://x.com/" target="_blank">X</a>
-      <a href="#" target="_blank">Discord Hub</a>
-    </div>
   </footer>
 
 </div>
