@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ data.agency_name }} | Elite Esports & Content Management</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --font-sans: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { background: #080808; color: #fff; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+    .site { min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 48px; border-bottom: 0.5px solid rgba(255,255,255,0.07); position: relative; z-index: 10; background: #080808; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; color: #fff; }
+    .logo-mark { width: 36px; height: 36px; background: #F5C200; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+    .logo-mark i { font-size: 20px; color: #080808; }
+    .logo-text { font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+    .logo-text span { color: #F5C200; }
+    .logo-est { font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; display: block; margin-top: 1px; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.15s; font-weight: 500; }
+    .nav-links a:hover { color: #F5C200; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-cta { font-size: 11px; padding: 8px 20px; background: #F5C200; color: #080808; border: none; border-radius: 3px; font-weight: 600; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; transition: opacity 0.15s; }
+    .nav-cta:hover { opacity: 0.9; }
+
+    /* HERO & LAYOUT SECTIONS */
+    .hero { padding: 120px 48px 100px; position: relative; overflow: hidden; min-height: 550px; }
+    .hero-bg-text { position: absolute; top: 20px; right: -20px; font-size: 220px; font-weight: 800; color: rgba(245,194,0,0.03); letter-spacing: -0.05em; line-height: 1; pointer-events: none; user-select: none; white-space: nowrap; }
+    .hero-accent { position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(245,194,0,0.15) 40%, transparent 100%); }
+    .hero-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+    .hero-eyebrow-line { width: 28px; height: 1px; background: #F5C200; }
+    .hero-eyebrow span { font-size: 11px; letter-spacing: 0.2em; color: #F5C200; text-transform: uppercase; font-weight: 600; }
+    .hero h1 { font-size: 56px; font-weight: 700; line-height: 1.1; max-width: 800px; margin-bottom: 24px; letter-spacing: -0.02em; text-transform: uppercase; }
+    .hero h1 em { font-style: normal; color: #F5C200; }
+    .hero-sub { font-size: 16px; color: rgba(255,255,255,0.5); max-width: 550px; line-height: 1.7; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 14px; align-items: center; margin-bottom: 72px; }
+    
+    .btn-primary { padding: 14px 32px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; display: inline-block; transition: opacity 0.15s; }
+    .btn-outline { padding: 14px 32px; background: transparent; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 500; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; display: inline-block; transition: all 0.15s; }
+    .btn-outline:hover { border-color: #F5C200; color: #F5C200; }
+    
+    .hero-stats { display: flex; gap: 0; border-top: 0.5px solid rgba(255,255,255,0.07); padding-top: 40px; }
+    .stat { padding-right: 48px; border-right: 0.5px solid rgba(255,255,255,0.07); margin-right: 48px; }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-size: 36px; font-weight: 700; color: #F5C200; line-height: 1; }
+    .stat-l { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+
+    /* TICKER */
+    .ticker { border-top: 0.5px solid rgba(255,255,255,0.07); border-bottom: 0.5px solid rgba(255,255,255,0.07); padding: 14px 0; overflow: hidden; background: #0d0d0d; }
+    .ticker-inner { display: flex; gap: 48px; white-space: nowrap; animation: ticker 25s linear infinite; width: max-content; }
+    .ticker-item { display: flex; align-items: center; gap: 12px; font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+    .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: #F5C200; flex-shrink: 0; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* SERVIZI DEREGOLATI CON JINJA */
+    .section { padding: 100px 48px; }
+    .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+    .section-eyebrow { font-size: 11px; letter-spacing: 0.2em; color: #F5C200; text-transform: uppercase; margin-bottom: 10px; font-weight: 600; }
+    .section-title { font-size: 36px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: -0.01em; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+    .svc { background: #0d0d0d; padding: 40px 32px; transition: background 0.15s; }
+    .svc:hover { background: #121212; }
+    .svc-num { font-size: 11px; color: rgba(245,194,0,0.5); letter-spacing: 0.1em; margin-bottom: 24px; font-weight: 600; }
+    .svc-icon { margin-bottom: 20px; }
+    .svc-icon i { font-size: 24px; color: #F5C200; }
+    .svc h3 { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 12px; letter-spacing: -0.01em; }
+    .svc p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+
+    /* CHI SIAMO & CANDIDATURE */
+    .about { padding: 100px 48px; background: #0d0d0d; border-top: 0.5px solid rgba(255,255,255,0.06); border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-card { background: #111; border: 0.5px solid rgba(255,255,255,0.06); border-radius: 6px; padding: 36px; }
+    .about-brand { display: flex; align-items: center; gap: 14px; padding: 20px 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+    .about-brand:last-child { border-bottom: none; padding-bottom: 0; }
+    .brand-icon { width: 44px; height: 44px; border-radius: 4px; background: rgba(245,194,0,0.06); border: 0.5px solid rgba(245,194,0,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-icon i { font-size: 20px; color: #F5C200; }
+    .brand-name { font-size: 14px; font-weight: 600; color: #fff; }
+    .brand-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+    .about-tag { display: inline-block; font-size: 10px; padding: 3px 8px; background: rgba(245,194,0,0.1); border: 0.5px solid rgba(245,194,0,0.2); border-radius: 2px; color: #F5C200; margin-left: auto; flex-shrink: 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    .cform { background: #0d0d0d; border: 0.5px solid rgba(255,255,255,0.07); border-radius: 6px; padding: 36px; }
+    .flabel { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 8px; font-weight: 600; }
+    .finput { width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 3px; padding: 12px 14px; font-size: 14px; color: #fff; font-family: var(--font-sans); margin-bottom: 20px; }
+    .fsubmit { width: 100%; padding: 14px; background: #F5C200; color: #080808; font-size: 12px; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    .portal { background: rgba(245,194,0,0.03); border-top: 0.5px solid rgba(245,194,0,0.12); border-bottom: 0.5px solid rgba(245,194,0,0.12); padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .footer { padding: 32px 48px; border-top: 0.5px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; background: #080808; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+    @media (max-width: 968px) {
+      .nav { padding: 18px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .section, .about { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="site">
+
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark"><i class="ti ti-shield"></i></div>
+      <div>
+        <div class="logo-text">RHINO<span>'S</span> AGENCY</div>
+        <span class="logo-est">EST. {{ data.established }}</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="/#servizi">Servizi</a>
+      <a href="/#chi-siamo">Chi Siamo</a>
+      <a href="/unisciti" style="color: #F5C200; font-weight: 600;">We're Hiring!</a>
+    </div>
+    <div class="nav-right">
+      <a href="/unisciti" class="nav-cta">Candidati</a>
+    </div>
+  </nav>
+
+  {% if page_id == 'home' %}
+  
+    <section class="hero">
+      <div class="hero-bg-text">RHINO</div>
+      <div class="hero-accent"></div>
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span>Elite Esports & Content Management</span>
+      </div>
+      <h1>Eliminiamo le inefficienze.<br>Tu pensa solo a <em>performare</em>.</h1>
+      <p class="hero-sub">{{ data.hero_sub }}</p>
+      <div class="hero-actions">
+        <a href="/#servizi" class="btn-primary">I nostri servizi</a>
+        <a href="/unisciti" class="btn-outline">Lavora con noi (Hiring) →</a>
+      </div>
+      
+      <div class="hero-stats">
+        {% for stat in data.stats %}
+        <div class="stat">
+          <div class="stat-n">{{ stat.value }}</div>
+          <div class="stat-l">{{ stat.label }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="ticker">
+      <div class="ticker-inner">
+        {% for item in data.ticker_items %}
+          <span class="ticker-item"><span class="ticker-dot"></span>{{ item }}</span>
+        {% endfor %}
+        {# Duplicazione di sicurezza per effetto loop infinito #}
+        {% for item in data.ticker_items %}
+          <span class="ticker-item"><span class="ticker-dot"></span>{{ item }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <section class="section" id="servizi">
+      <div class="section-header">
+        <div>
+          <div class="section-eyebrow">La nostra operatività</div>
+          <div class="section-title">Aree di Servizio</div>
+        </div>
+      </div>
+      <div class="services-grid">
+        {% for svc in data.services %}
+        <div class="svc">
+          <div class="svc-num">{{ svc.id }}</div>
+          <div class="svc-icon"><i class="ti {{ svc.icon }}"></i></div>
+          <h3>{{ svc.title }}</h3>
+          <p>{{ svc.desc }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="about" id="chi-siamo">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-card">
+            <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;font-weight:600;">La nostra struttura</div>
+            <div class="about-brand">
+              <div class="brand-icon"><i class="ti ti-building"></i></div>
+              <div>
+                <div class="brand-name">Rhino's Agency</div>
+                <div class="brand-desc">Entità operativa di management e servizi</div>
+              </div>
+              <span class="about-tag">Management</span>
+            </div>
+            
+            {% for collab in data.collaborations %}
+            <div class="about-brand">
+              <div class="brand-icon"><i class="ti ti-bolt"></i></div>
+              <div>
+                <div class="brand-name">{{ collab.team }}</div>
+                <div class="brand-desc">{{ collab.type }} — {{ collab.date }}</div>
+              </div>
+              <span class="about-tag" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #a855f7;">{{ collab.status }}</span>
+            </div>
+            {% endfor %}
+
+            <div style="margin-top:24px;padding-top:20px;border-top:0.5px solid rgba(255,255,255,0.06);">
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;font-weight:600;">Partner Attivi</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                {% for partner in data.partners %}
+                  <span style="font-size:11px;padding:5px 12px;background:rgba(245,194,0,0.06);border:0.5px solid rgba(245,194,0,0.15);border-radius:3px;color:#F5C200;font-weight:500;">{{ partner }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <div class="section-eyebrow">Chi siamo</div>
+          <h2>Un ponte strategico tra talento e organizzazione</h2>
+          <p>Rhino's Agency nasce come partner operativo specializzato per l'ecosistema Esports e Content Creation. Lavoriamo attivamente sul mercato per rimuovere tutti i colli di bottiglia e i blocchi logistico-gestionali.</p>
+          <p>Il nostro metodo si basa su tre step rigorosi: un'Analisi iniziale fondata sui dati concreti di reach e performance, l'Integrazione Tecnica immediata dello staff e degli asset di supporto, e un Monitoraggio Continuo delle relazioni commerciali per scalare il valore del progetto.</p>
+        </div>
+      </div>
+    </div>
+
+  {% elif page_id == 'unisciti' %}
+
+    <section class="section" style="max-width: 800px; margin: 0 auto; padding-top: 140px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div class="section-eyebrow">Join Our Growing Team</div>
+        <h2 class="section-title" style="font-size: 46px; color: #F5C200;">We're Hiring!</h2>
+        <p style="color: rgba(255,255,255,0.5); margin-top: 10px;">Entra a far parte della struttura tecnica ed esecutiva di Rhino's Agency.</p>
+      </div>
+
+      <form class="cform" action="/invia-candidatura" methods="POST">
+        <label class="flabel">Nome Completo</label>
+        <input class="finput" type="text" name="nome" placeholder="Il tuo nome e cognome" required>
+
+        <label class="flabel">Email di Contatto</label>
+        <input class="finput" type="email" name="email" placeholder="nome@esempio.com" required>
+
+        <label class="flabel">Posizione d'interesse (Poster Attivi)</label>
+        <select class="finput" name="posizione" style="background: #111; color: #fff;" required>
+          <option value="" disabled selected>Seleziona il ruolo...</option>
+          {% for posizione in data.hiring_positions %}
+            <option value="{{ posizione }}">{{ posizione }}</option>
+          {% endfor %}
+        </select>
+
+        <label class="flabel">Piattaforma Principale Operativa</label>
+        <select class="finput" name="piattaforma" style="background: #111; color: #fff;" required>
+          <option value="PC">PC (Workstation Intel/AMD)</option>
+          <option value="PS5">PlayStation 5</option>
+          <option value="Xbox">Xbox Series X/S</option>
+          <option value="Hybrid">Multi-piattaforma</option>
+        </select>
+
+        <label class="flabel">Disponibilità settimanale (Giorni)</label>
+        <input class="finput" type="number" name="disponibilita" min="1" max="7" placeholder="Es. 5" required>
+
+        <label class="flabel">Esperienze pregresse o Note sul posizionamento</label>
+        <textarea class="finput ftextarea" name="messaggio" placeholder="Raccontaci i team con cui hai lavorato o il tuo portfolio tecnico..." required></textarea>
+
+        <button type="submit" class="fsubmit">Invia Candidatura Ufficiale</button>
+      </form>
+    </section>
+
+  {% endif %}
+
+  <div class="portal">
+    <span>Accesso riservato allo staff e ai talenti registrati nel network.</span>
+    <button class="portal-btn"><i class="ti ti-lock"></i> Staff Portal</button>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-logo">RHINO'S <span>AGENCY</span></div>
+    <div class="footer-copy">© 2026 Rhino's Agency — Tutti i diritti riservati.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
