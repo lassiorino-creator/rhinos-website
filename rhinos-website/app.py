@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
+application = app  # <--- FONDAMENTALE PER VERCEL: Permette l'importazione corretta del modulo WSGI
 
 # Struttura dati centralizzata (Espandibile in futuro con foglio dati esterno o DB)
 DATA_STORE = {
